@@ -31,13 +31,13 @@ jobs:
         working-directory: Liftee/
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/Liftee/
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/Liftee/Liftee.csproj
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/Liftee/
+          path: ${{env.DOTNET_ROOT}}/Liftee/Liftee.csproj
 
   deploy:
     runs-on: windows-latest
