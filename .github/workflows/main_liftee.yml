@@ -24,14 +24,14 @@ jobs:
           
       - name: Install dependencies
         run: dotnet restore
-        working-directory: Liftee/Liftee
+        working-directory: Liftee
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release --no-restore
-        working-directory: Liftee/Liftee
+        run: dotnet build --configuration Release
+        working-directory: Liftee
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}//Liftee
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/Liftee
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
