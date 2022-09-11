@@ -1,0 +1,53 @@
+﻿@using Liftee.Models
+@model IEnumerable<Project>
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{  
+    var asyncSettings = new Syncfusion.EJ2.Inputs.UploaderAsyncSettings 
+        { 
+            SaveUrl ="http://localhost:50707/Index?handler=Save",
+            RemoveUrl = "http://localhost:50707/Index?handler=Remove"
+        };
+}  
+
+<div>
+    <form asp-controller="Home" asp-action="Privacy" method="post" enctype="multipart/form-data">
+        <h4 class="text-black fw-bold" id='droparea'>Drop files here to upload</h4>
+        @Html.EJS().Uploader("UploadFiles").AllowedExtensions(".doc, .docx, .xls, .xlsx").AutoUpload(false).AsyncSettings(new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = "https://ej2.syncfusion.com/services/api/uploadbox/Save", RemoveUrl = "https://ej2.syncfusion.com/services/api/uploadbox/Remove" }).Render()
+    </form>
+</div>
+
+<style>
+    .fileupload {
+        margin: 20px auto;
+        width: 400px;
+    }
+
+    #droparea {
+        padding: 50px 25px;
+        margin: 30px auto;
+        border: 1px solid #c3c3c3;
+        text-align: center;
+        width: 20%;
+        display: inline-flex;
+    }
+
+    .e-file-select,
+    .e-file-drop {
+        display: none;
+    }
+
+    body .e-upload-drag-hover {
+        outline: 2px dashed brown;
+    }
+
+    #uploadfile {
+        width: 60%;
+        display: inline-flex;
+        margin-left: 5%;
+    }
+</style>

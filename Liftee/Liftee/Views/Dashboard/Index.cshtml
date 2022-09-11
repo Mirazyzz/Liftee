@@ -1,0 +1,226 @@
+﻿<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget summary projects">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-file-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Total Projects</span>
+                <h1 class="display-6 fw-bold">@ViewBag.TotalProjects</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget summary finished">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-sharp fa-solid fa-check fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Finished</span>
+                <h1 class="display-6 fw-bold">@ViewBag.FinishedProjects</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget summary in-process">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-sharp fa-solid fa-bolt fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">In Process</span>
+                <h1 class="display-6 fw-bold">@ViewBag.inProcessProjects</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget summary problems">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-circle-exclamation fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Problems</span>
+                <h1 class="display-6 fw-bold">@ViewBag.Problems</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Project Statuses</h5>
+            </div>
+            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@ViewBag.ProjectStatuses"
+                                           xName="ProjectStatus" yName="Count"
+                                           innerRadius="60%" legendShape="Circle" 
+                                           palettes=@(new string[]{"#0e8d76","#a4b219","#cb9b00","#8a442c","#0454b5","#7d0a0a","#822690","#4c2090","#313e93","#0096ac"})>
+                        <e-accumulationseries-datalabel name="formattedAmount" visible></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position="Top" toggleVisibility="false">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Report</h5>
+            </div>
+            <ejs-chart id="spline-chart" background="#1a222b"
+                       palettes=@(new string[]{"#54ffa9","#ffe91a"})>
+                <e-chart-primaryxaxis valueType="Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis>
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="month" width="3"
+                              yName="newProjects" name="Finished" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="month" width="3"
+                              yName="finishedProjects" name="New Projects" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                </e-series-collection>
+                <e-chart-legendsettings position="Top" alignment="Far" toggleVisibility="false">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared></e-chart-tooltipsettings>
+            </ejs-chart>
+        </div>
+    </div>
+</div>
+
+<div class="row p-3">
+    <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Projects</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="recent-transactions"
+                          dataSource="@ViewBag.Projects" 
+                          gridLines="None"
+                          rowDataBound="rowDataBoundEvent"
+                          detailTemplate="#detailtemplate">
+                 <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+                    <e-grid-columns>
+                        <e-grid-column headerText="Название объекта" field="PropertyName" type="text" width="150px"></e-grid-column>
+                        <e-grid-column headerText="Договор статус" field="ContractStatus" textAlign="Left" width="130px"></e-grid-column>
+                        <e-grid-column headerText="Дата нач" field="InstallationStartDate" width="100px"
+                                       type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>
+                        <e-grid-column headerText="Дата окон" field="InstallationFinishDate" width="100px"
+                                       type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>     
+                        <e-grid-column headerText="Статус монтажа" field="InstallationStatus" textAlign="Left" width="140px"></e-grid-column>
+                        <e-grid-column headerText="Монтажник" field="Fitter" textAlign="Left" width="100px"></e-grid-column>
+                        <e-grid-column headerText="Проблема" field="Issues" textAlign="Left" width="100px"></e-grid-column>
+                        <e-grid-column headerText="Статус проекта" field="ProjectStatus" textAlign="Left" wdith="120px"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+            </div>
+        </div>
+</div>
+
+<style type="text/css" class="cssStyles">
+    .detailtable td {
+        font-size: 13px;
+        padding: 4px;
+        max-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: white;
+    }
+</style>
+
+
+<script>
+
+function rowDataBoundEvent(args) {
+
+    if (args.data['IsDue']) {
+        args.row.bgColor = '#c44545';
+    }
+}
+
+</script>
+
+<script type="text/x-template" id="detailtemplate">
+    <table class="detailtable" width="100%">
+        <colgroup>
+            <col width="50" />
+            <col width="50" />
+        </colgroup>
+        <tbody>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Договор: </span> ${Contract}
+                </td>
+                <td>
+                    <span style="font-weight: 500;">Название объекта: </span> ${PropertyName}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Контактные данные: </span> ${ContactDetails}
+                </td>
+                <td>
+                    <span style="font-weight: 500;">Договор Статус: </span> ${ContractStatus}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Серийный номер: </span> ${SerialNumber}
+                </td>
+                <td>
+                    <span style="font-weight: 500;">Дата нач.монтажа: </span> ${new Date(InstallationStartDate).toLocaleDateString()}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Монтажник: </span> ${Fitter}
+                </td>
+                <td>
+                    <span style="font-weight: 500;">Статус монтажа: </span> ${InstallationStatus}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Дата окон.монтажа: </span> ${new Date(InstallationFinishDate).toLocaleDateString()}
+                </td>
+                <td>
+                    <span style="font-weight: 500;">Проблема: </span> ${Issues}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Документ Ф2/Ф3: </span> ${Document}
+                </td>
+                <td>
+                    <span style="font-weight: 500;">Паспорт лифта: </span> ${ElevatorPassport}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 500;">Статус проекта: </span> ${ProjectStatus}
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</script>
