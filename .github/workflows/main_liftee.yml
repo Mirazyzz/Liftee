@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
           
       - name: Install dependencies
-        run: dotnet restore ./Liftee.sln
+        run: dotnet restore Liftee/Liftee.sln
 
       - name: Build with dotnet
         run: dotnet build Liftee/Liftee.csproj --configuration Release --no-restore
