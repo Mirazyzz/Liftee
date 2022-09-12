@@ -47,20 +47,23 @@ namespace Liftee.Controllers
             {
                 projects.Add(new Project()
                 {
-                    Id = reader.GetValue(0).ToString(),
-                    Contract = reader.GetValue(1).ToString(),
-                    PropertyName = reader.GetValue(2).ToString(),
-                    ContactDetails = reader.GetValue(3).ToString(),
-                    ContractStatus = reader.GetValue(4).ToString(),
-                    SerialNumber = reader.GetValue(5).ToString(),
-                    InstallationStartDate = reader.GetValue(6).ToString(),
-                    Fitter = reader.GetValue(7).ToString(),
-                    InstallationStatus = reader.GetValue(8).ToString(),
-                    InstallationFinishDate = reader.GetValue(9).ToString(),
-                    Issues = reader.GetValue(10).ToString(),
-                    Document = reader.GetValue(11).ToString(),
-                    ElevatorPassport = reader.GetValue(12).ToString(),
-                    ProjectStatus = reader.GetValue(13).ToString()
+                    Id = reader.GetValue(0)?.ToString(),
+                    Contract = reader.GetValue(1)?.ToString(),
+                    PropertyName = reader.GetValue(2)?.ToString(),
+                    ContactDetails = reader.GetValue(3)?.ToString(),
+                    ContractStatus = reader.GetValue(4)?.ToString(),
+                    GP = reader.GetValue(5)?.ToString(),
+                    ElevatorType = reader.GetValue(6)?.ToString(),
+                    SerialNumber = reader.GetValue(7)?.ToString(),
+                    InstallationStartDate = reader.GetValue(8)?.ToString(),
+                    Fitter = reader.GetValue(9)?.ToString(),
+                    InstallationStatus = reader.GetValue(10)?.ToString(),
+                    InstallationFinishDate = reader.GetValue(11)?.ToString(),
+                    Issues = reader.GetValue(12)?.ToString(),
+                    Document = reader.GetValue(13)?.ToString(),
+                    ElevatorPassport = reader.GetValue(14)?.ToString(),
+                    ProjectStatus = reader.GetValue(15)?.ToString(),
+                    MutualSettlement = reader.GetValue(16)?.ToString()
                 });
             }
 
