@@ -20,6 +20,8 @@
         public string ProjectStatus { get; set; } = "";
         public string MutualSettlement { get; set; } = "";
 
+        public List<string> SerialNumbers { get; set; }
+
         public bool IsDue
         {
             get
@@ -38,6 +40,11 @@
 
                 return false;
             }
+        }
+
+        public Project()
+        {
+            SerialNumbers = new List<string>();
         }
     }
 }

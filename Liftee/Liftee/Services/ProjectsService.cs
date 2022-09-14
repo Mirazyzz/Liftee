@@ -18,7 +18,19 @@ namespace Liftee.Services
                 _projects.Clear();
             }
 
-            _projects.AddRange(projects);
+            foreach(var project in projects)
+            {
+                var projectExists = _projects.Where(p => p.PropertyName == project.PropertyName).FirstOrDefault();
+
+                if (projectExists != null)
+                {
+                    projectExists.SerialNumbers.Add(project.SerialNumber);
+                }
+                else
+                {
+                    _projects.Add(project);
+                }
+            }
         }
     }
 }

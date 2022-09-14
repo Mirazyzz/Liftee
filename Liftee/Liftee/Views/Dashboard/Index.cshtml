@@ -1,4 +1,12 @@
-﻿<div class="row mb-5">
+﻿@using Liftee.Controllers
+@model ComboBoxFor
+@{
+    var data = new string[] {
+        "Все", "Законченный", "В процессе", "Проблемы"
+    };
+}
+
+<div class="row mb-5">
     <div class="col-md-3">
         <div class="d-flex flex-row widget summary projects">
             <div class="d-flex flex-column justify-content-center p-5">
@@ -48,86 +56,34 @@
     </div>
 </div>
 
-
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="widget chart">
-            <div class="p-4">
-                <h5 class="fw-bold">Project Statuses</h5>
-            </div>
-            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
-                <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="@ViewBag.ProjectStatuses"
-                                           xName="ProjectStatus" yName="Count"
-                                           innerRadius="60%" legendShape="Circle" 
-                                           palettes=@(new string[]{"#0e8d76","#a4b219","#cb9b00","#8a442c","#0454b5","#7d0a0a","#822690","#4c2090","#313e93","#0096ac"})>
-                        <e-accumulationseries-datalabel name="formattedAmount" visible></e-accumulationseries-datalabel>
-                    </e-accumulation-series>
-                </e-accumulation-series-collection>
-                <e-accumulationchart-legendsettings position="Top" toggleVisibility="false">
-                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
-                </e-accumulationchart-legendsettings>
-                <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
-            </ejs-accumulationchart>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="widget chart">
-            <div class="p-4">
-                <h5 class="fw-bold">Report</h5>
-            </div>
-            <ejs-chart id="spline-chart" background="#1a222b"
-                       palettes=@(new string[]{"#54ffa9","#ffe91a"})>
-                <e-chart-primaryxaxis valueType="Category">
-                    <e-majorgridlines width="0"></e-majorgridlines>
-                    <e-majorticklines width="0"></e-majorticklines>
-                </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis>
-                    <e-majorgridlines width="1" color="#32414d" dashArray="3"></e-majorgridlines>
-                    <e-majorticklines width="0"></e-majorticklines>
-                    <e-linestyle width="0"></e-linestyle>
-                </e-chart-primaryyaxis>
-                <e-chart-chartarea>
-                    <e-chartarea-border width="0"></e-chartarea-border>
-                </e-chart-chartarea>
-                <e-series-collection>
-                    <e-series dataSource="@ViewBag.SplineChartData" xName="month" width="3"
-                              yName="newProjects" name="Finished" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
-                    <e-series dataSource="@ViewBag.SplineChartData" xName="month" width="3"
-                              yName="finishedProjects" name="New Projects" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
-                </e-series-collection>
-                <e-chart-legendsettings position="Top" alignment="Far" toggleVisibility="false">
-                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
-                </e-chart-legendsettings>
-                <e-chart-tooltipsettings enable shared></e-chart-tooltipsettings>
-            </ejs-chart>
-        </div>
-    </div>
-</div>
-
 <div class="row p-3">
     <div class="widget">
             <div class="p-4">
-                <h5 class="fw-bold">Projects</h5>
+                <h5 class="fw-bold">@ViewBag.ProjectsCount Projects</h5>
+                <form asp-controller="Dashboard" asp-action="Index" method="get">
+                    <p>
+                        <select asp-items="@(new SelectList(Model.Data))" asp-for="@Model.Val">
+                        </select>
+                        <input type="submit" value="Filter" />
+                    </p>
+                </form>
             </div>
             <div class="px-4 pb-4">
                 <ejs-grid id="recent-transactions"
                           dataSource="@ViewBag.Projects" 
                           gridLines="None"
                           rowDataBound="rowDataBoundEvent"
-                          detailTemplate="#detailtemplate">
+                          detailTemplate="#detailtemplate"
+                          toolbar="@(new List<string>(){"Search"})"
+                              allowSorting="true">
                  <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
                     <e-grid-columns>
-                        <e-grid-column headerText="Название объекта" field="PropertyName" type="text" width="150px"></e-grid-column>
-                        <e-grid-column headerText="Договор статус" field="ContractStatus" textAlign="Left" width="130px"></e-grid-column>
-                        <e-grid-column headerText="Дата нач" field="InstallationStartDate" width="100px"
-                                       type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>
-                        <e-grid-column headerText="Дата окон" field="InstallationFinishDate" width="100px"
-                                       type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>     
-                        <e-grid-column headerText="Статус монтажа" field="InstallationStatus" textAlign="Left" width="140px"></e-grid-column>
-                        <e-grid-column headerText="Монтажник" field="Fitter" textAlign="Left" width="100px"></e-grid-column>
-                        <e-grid-column headerText="Проблема" field="Issues" textAlign="Left" width="100px"></e-grid-column>
-                        <e-grid-column headerText="Статус проекта" field="ProjectStatus" textAlign="Left" wdith="120px"></e-grid-column>
+                        <e-grid-column headerText="Название объекта" field="PropertyName" type="text" ></e-grid-column>
+                        <e-grid-column headerText="Договор статус" field="ContractStatus" textAlign="Left"></e-grid-column>   
+                        <e-grid-column headerText="Статус монтажа" field="InstallationStatus" textAlign="Left"></e-grid-column>
+                        <e-grid-column headerText="Монтажник" field="Fitter" textAlign="Left"></e-grid-column>
+                        <e-grid-column headerText="Проблема" field="Issues" textAlign="Left"></e-grid-column>
+                        <e-grid-column headerText="Статус проекта" field="ProjectStatus" textAlign="Left"></e-grid-column>
                     </e-grid-columns>
                 </ejs-grid>
             </div>
@@ -143,6 +99,11 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         color: white;
+    }
+
+    #submitbutton {
+        margin: 10px auto;
+        text-align: center;
     }
 </style>
 
@@ -227,6 +188,14 @@ function rowDataBoundEvent(args) {
                 </td>
                 <td>
                     <span style="font-weight: 500;">Взаиморасчёт: </span> ${MutualSettlement}
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2">
+                    <span style="font-weight: 500;">Серийные номера: </span>
+                    <br/>
+                    ${SerialNumbers}
                 </td>
             </tr>
         </tbody>
