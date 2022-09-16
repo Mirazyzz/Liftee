@@ -7,20 +7,24 @@
 }
 
 <div class="row mb-5">
+    
     <div class="col-md-3">
-        <div class="d-flex flex-row widget summary projects">
-            <div class="d-flex flex-column justify-content-center p-5">
-                <i class="fa-solid fa-file-lines fa-2xl"></i>
+        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="All">
+            <div class="d-flex flex-row widget summary projects" onclick="onProjectsWidgetClick">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="fa-solid fa-file-lines fa-2xl"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Total</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.TotalProjects</h1>
+                </div>
             </div>
-            <div class="d-flex flex-column m-auto py-3">
-                <span class="lead">Total</span>
-                <h1 class="display-6 fw-bold">@ViewBag.TotalProjects</h1>
-            </div>
+        </a>
         </div>
-    </div>
 
     <div class="col-md-3">
-        <div class="d-flex flex-row widget summary finished">
+        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="Finished">
+            <div class="d-flex flex-row widget summary finished">
             <div class="d-flex flex-column justify-content-center p-5">
                 <i class="fa-sharp fa-solid fa-check fa-2xl"></i>
             </div>
@@ -29,30 +33,35 @@
                 <h1 class="display-6 fw-bold">@ViewBag.FinishedProjects</h1>
             </div>
         </div>
+        </a>
     </div>
 
     <div class="col-md-3">
-        <div class="d-flex flex-row widget summary in-process">
-            <div class="d-flex flex-column justify-content-center p-5">
-                <i class="fa-sharp fa-solid fa-bolt fa-2xl"></i>
+        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="InProccess">
+            <div class="d-flex flex-row widget summary in-process">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="fa-sharp fa-solid fa-bolt fa-2xl"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">In Process</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.inProcessProjects</h1>
+                </div>
             </div>
-            <div class="d-flex flex-column m-auto py-3">
-                <span class="lead">In Process</span>
-                <h1 class="display-6 fw-bold">@ViewBag.inProcessProjects</h1>
-            </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-md-3">
-        <div class="d-flex flex-row widget summary problems">
-            <div class="d-flex flex-column justify-content-center p-5">
-                <i class="fa-sharp fa-solid fa-circle-exclamation fa-2xl"></i>
+        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="Problems">
+            <div class="d-flex flex-row widget summary problems">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="fa-sharp fa-solid fa-circle-exclamation fa-2xl"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Problems</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.Problems</h1>
+                </div>
             </div>
-            <div class="d-flex flex-column m-auto py-3">
-                <span class="lead">Problems</span>
-                <h1 class="display-6 fw-bold">@ViewBag.Problems</h1>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
 
@@ -60,13 +69,13 @@
     <div class="widget">
             <div class="p-4">
                 <h5 class="fw-bold">@ViewBag.ProjectsCount Projects</h5>
-                <form asp-controller="Dashboard" asp-action="Index" method="get">
+                @*<form asp-controller="Dashboard" asp-action="Index" method="get">
                     <p>
                         <select asp-items="@(new SelectList(Model.Data))" asp-for="@Model.Val">
                         </select>
                         <input type="submit" value="Filter" />
                     </p>
-                </form>
+                </form>*@
             </div>
             <div class="px-4 pb-4">
                 <ejs-grid id="recent-transactions"
@@ -115,6 +124,10 @@ function rowDataBoundEvent(args) {
     if (args.data['IsDue']) {
         args.row.bgColor = '#c44545';
     }
+}
+
+function onProjectsWidgetClick(args) {
+    console.log(args);
 }
 
 </script>

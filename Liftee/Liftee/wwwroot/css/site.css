@@ -25,6 +25,11 @@ body {
     overflow: hidden;
 }
 
+a {
+    all: unset;
+    cursor: pointer;
+}
+
 .e-bigger {
     font-size: x-large;
 }
