@@ -8,56 +8,70 @@
 
 <div class="row mb-5">
     
-    <div class="col-md-3">
+    <div class="col">
         <a asp-action="Index" asp-controller="Dashboard" asp-route-category="All">
             <div class="d-flex flex-row widget summary projects" onclick="onProjectsWidgetClick">
-                <div class="d-flex flex-column justify-content-center p-5">
+                <div class="d-flex flex-column justify-content-center p-4">
                     <i class="fa-solid fa-file-lines fa-2xl"></i>
                 </div>
                 <div class="d-flex flex-column m-auto py-3">
-                    <span class="lead">Total</span>
+                    <span class="lead">Общий</span>
                     <h1 class="display-6 fw-bold">@ViewBag.TotalProjects</h1>
                 </div>
             </div>
         </a>
         </div>
 
-    <div class="col-md-3">
+    <div class="col">
         <a asp-action="Index" asp-controller="Dashboard" asp-route-category="Finished">
             <div class="d-flex flex-row widget summary finished">
-            <div class="d-flex flex-column justify-content-center p-5">
+            <div class="d-flex flex-column justify-content-center p-4">
                 <i class="fa-sharp fa-solid fa-check fa-2xl"></i>
             </div>
             <div class="d-flex flex-column m-auto py-3">
-                <span class="lead">Finished</span>
+                <span class="lead">Законченные</span>
                 <h1 class="display-6 fw-bold">@ViewBag.FinishedProjects</h1>
             </div>
         </div>
         </a>
     </div>
 
-    <div class="col-md-3">
+    <div class="col">
         <a asp-action="Index" asp-controller="Dashboard" asp-route-category="InProccess">
             <div class="d-flex flex-row widget summary in-process">
-                <div class="d-flex flex-column justify-content-center p-5">
+                <div class="d-flex flex-column justify-content-center p-4">
                     <i class="fa-sharp fa-solid fa-bolt fa-2xl"></i>
                 </div>
                 <div class="d-flex flex-column m-auto py-3">
-                    <span class="lead">In Process</span>
+                    <span class="lead">В процессе</span>
                     <h1 class="display-6 fw-bold">@ViewBag.inProcessProjects</h1>
                 </div>
             </div>
         </a>
     </div>
 
-    <div class="col-md-3">
-        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="Problems">
-            <div class="d-flex flex-row widget summary problems">
-                <div class="d-flex flex-column justify-content-center p-5">
-                    <i class="fa-sharp fa-solid fa-circle-exclamation fa-2xl"></i>
+    <div class="col">
+        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="Debts">
+            <div class="d-flex flex-row widget summary debts">
+                <div class="d-flex flex-column justify-content-center p-4">
+                    <i class="fa-sharp fa-solid fa-file-invoice-dollar fa-2xl"></i>
                 </div>
                 <div class="d-flex flex-column m-auto py-3">
-                    <span class="lead">Problems</span>
+                    <span class="lead">Долги</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.Debts</h1>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a asp-action="Index" asp-controller="Dashboard" asp-route-category="Problems">
+            <div class="d-flex flex-row widget summary problems">
+                <div class="d-flex flex-column justify-content-center p-4">
+                    <i class=" fa-sharp fa-solid fa-circle-exclamation fa-2xl"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Проблемы</span>
                     <h1 class="display-6 fw-bold">@ViewBag.Problems</h1>
                 </div>
             </div>
@@ -69,13 +83,21 @@
     <div class="widget">
             <div class="p-4">
                 <h5 class="fw-bold">@ViewBag.ProjectsCount Projects</h5>
-                @*<form asp-controller="Dashboard" asp-action="Index" method="get">
+                <form class="mt-3" asp-controller="Dashboard" asp-action="Index" method="get">
                     <p>
-                        <select asp-items="@(new SelectList(Model.Data))" asp-for="@Model.Val">
+                        <select id="select" asp-items="@(new SelectList(Model.FitterData))" asp-for="@Model.FitterValue">
+                            <option selected="true" disabled="disabled">
+                                Выбрать монтажника
+                            </option>
                         </select>
-                        <input type="submit" value="Filter" />
+                        <select id="select" asp-items="@(new SelectList(Model.DocumentData))" asp-for="@Model.DocumentValue">
+                            <option selected="true" disabled="disabled">
+                                Выберать документа
+                            </option>
+                        </select>
+                        <input type="submit" value="Применить" class="btn btn-primary btn-lg"/>
                     </p>
-                </form>*@
+                </form>
             </div>
             <div class="px-4 pb-4">
                 <ejs-grid id="recent-transactions"
